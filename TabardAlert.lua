@@ -28,20 +28,33 @@ end
 SlashCmdList["TABARDALERT"] = handler;
 
 -- Register for when you gain any reputation.
--- CHAT_MSG_COMBAT_FACTION_CHANGE
 -- If that reputation matches the tabard, and you are exalted with that faction. Alert
+-- TODO: also check if he is in a dungeon.
+local EventFrame = CreateFrame("Frame")
+EventFrame:RegisterEvent("COMBAT_TEXT_UPDATE")
+EventFrame:SetScript("OnEvent", function(self, event, event_type, faction, rep_amount) 
+	if event_type == 'FACTION' then
+        print('You gained ' .. rep_amount .. ' with ' .. faction)
+        faction_id = factions[faction]
+        print('faction id: ' .. faction_id)
+        -- cur_tabard_faction = getTabardFaction()
+        -- if cur_tabard_faction == faction and isExalted(cur_tabard_faction) then
+        --      print('You are wasting reputation!')
+        --      play sound
+    end
+end)
+
 
 -- Check for current tabard.
--- Associate the id with a faction id?
 function getTabardFaction()
-	slotId = GetInventorySlotInfo("TabardSlot");
-	itemLink = GetInventoryItemLink("player", slotId);
-	print("You are wearing: " , itemLink);
-	-- You probably need this.
-	itemId = GetInventoryItemID("player", GetInventorySlotInfo("TabardSlot"));
-	
-	try = isExalted( 1171 );
-	print("Are you exalted: " , try);
+    -- Find the id for the tabard the player is currently wearing.
+	local itemId = GetInventoryItemID("player", GetInventorySlotInfo("TabardSlot"));
+    if itemId ~= nil then 
+        print('You are wearing a tabard with the id: ' .. itemId);
+    end
+   
+    -- TODO: Find the corresponding faction name/id
+
 end
 
 -- This simply returns true if the player is exalted with the given faction.
