@@ -1,0 +1,8 @@
+## Interface: 40300
+## Version: 1.0
+## Title: TabardAlert
+## Author: Siriusjs
+## Notes: This is a handy little addon that ensures you don't waste reputation in a dungeon.
+
+TabardAlert.lua
+TabardAlert.xml
