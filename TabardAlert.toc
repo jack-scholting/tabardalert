@@ -8,4 +8,5 @@
 
 TabardAlert.lua
 TabardAlertLists.lua
+TabardAlertConfig.lua
 TabardAlert.xml

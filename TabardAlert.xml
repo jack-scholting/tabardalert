@@ -2,13 +2,13 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
  xsi:schemaLocation="http://www.blizzard.com/wow/ui/ 
  ..\..\FrameXML\UI.xsd">
-  <Script File="TabardAlert.lua"/>
-  <Frame name="TabardAlertFrame">
-   <Scripts>
-    <OnLoad>
-     HelloWorld();
-	 getTabardFaction();
-    </OnLoad>
-   </Scripts>
-  </Frame>
+<Script File="TabardAlert.lua"/>
+    <Frame name="TabardAlertFrame">
+        <Scripts>
+            <OnLoad>
+                HelloWorld();
+                getTabardFaction();
+            </OnLoad>
+        </Scripts>
+    </Frame>
 </Ui> 
