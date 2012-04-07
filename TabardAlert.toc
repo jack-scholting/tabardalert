@@ -3,6 +3,9 @@
 ## Title: TabardAlert
 ## Author: Siriusjs
 ## Notes: This is a handy little addon that ensures you don't waste reputation in a dungeon.
+## OptionalDeps: WoWUnit
+## SavedVariablesPerCharacter: TabardAlert_armed, TabardAlert_maxExalted
 
 TabardAlert.lua
+TabardAlertLists.lua
 TabardAlert.xml
