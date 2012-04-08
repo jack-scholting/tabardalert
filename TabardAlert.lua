@@ -6,8 +6,9 @@
 
 --------------------
 -- Add Unit Tests --
---------------------
+-------------------------------------------------------------------------------
 WoWUnit:AddTestSuite("Test_isExalted", Test_isExalted)
+-------------------------------------------------------------------------------
  
 ----------------------
 -- Welcome the User --
@@ -19,7 +20,7 @@ end
 
 --------------------
 -- Slash Commands --
---------------------
+-------------------------------------------------------------------------------
 -- This registers my slash command and takes one argument. 
 SLASH_TABARDALERT1 = '/tbal';
 local function handler(msg, editbox)
@@ -44,10 +45,11 @@ local function handler(msg, editbox)
 	end
 end
 SlashCmdList["TABARDALERT"] = handler;
+-------------------------------------------------------------------------------
 
 ----------------------
 -- Watch for events --
-----------------------
+-------------------------------------------------------------------------------
 -- Register for when you gain any reputation.
 -- If that reputation matches the tabard, and you are exalted with that faction. Alert
 -- TODO: also check if he is in a dungeon.
@@ -71,12 +73,11 @@ EventFrame:SetScript("OnEvent", function(self, event, event_type, faction, rep_a
         end
     end
 end)
-
+-------------------------------------------------------------------------------
 
 ----------------------
 -- Helper Functions --
-----------------------
-
+-------------------------------------------------------------------------------
 -- Check for and return the id for the current tabard faction.
 function getTabardFaction()
     -- Find the id for the tabard the player is currently wearing.
@@ -100,4 +101,4 @@ function isExalted( factionId )
 		return false;
 	end
 end
-
+-------------------------------------------------------------------------------
