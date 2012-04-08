@@ -1,15 +1,20 @@
 -------------------------------------------------------------------------------
---	Author: Jack Scholting
+--	Author: siriusjs
+--  Date: 4/8/12
 --	Description: This contains the functions that allow configuration under
 --      Interface->Addons->TabardAlert.
 -------------------------------------------------------------------------------
 
+------------------------------
+-- Create the overall frame --
+------------------------------
 -- Create the frame that will exist in the Interface Options Panel.
 TabardAlertPanel = CreateFrame( "Frame", "TabardAlertPanel", UIParent );
 -- Give the frame a name in the listing on the left.
 TabardAlertPanel.name = "TabardAlert";
 -- Add this frame inside the Interface Options Panel.
 InterfaceOptions_AddCategory(TabardAlertPanel);
+
 
 -- Create a Checkbutton.
 local frame = CreateFrame("CheckButton", "UICheckButtonTemplateTest", TabardAlertPanel, "UICheckButtonTemplate")

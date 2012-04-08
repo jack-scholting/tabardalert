@@ -1,4 +1,12 @@
- local Test_isExalted = {
+-------------------------------------------------------------------------------
+--	Author: siriusjs
+--  Date: 4/8/12
+--	Description: This file contains the unit tests for the TabardAlert addon. 
+--      * These tests are run by the addon WoWUnit.
+--      * To run: "/wowunit <test_suite_name>" (use while in-game)
+-------------------------------------------------------------------------------
+
+local Test_isExalted = {
 	
 	mocks = {
 		UnitName = function()
