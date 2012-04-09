@@ -25,10 +25,10 @@ end
 SLASH_TABARDALERT1 = '/tbal';
 local function handler(msg, editbox)
 	if msg == 'on' then
-		print('Tabard Alert: Addon is now armed.');
+		print("|cff00FF33 Tabard Alert: Addon is now armed.");
 		TabardAlert_armed = true
 	elseif msg == 'off' then
-		print('Tabard Alert: Addon is now disarmed.');
+		print('|cFF800080Tabard Alert: Addon is now disarmed.');
 		TabardAlert_armed = false
 	elseif msg == 'status' then
         if TabardAlert_armed == nil then

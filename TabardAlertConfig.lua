@@ -16,16 +16,6 @@ TabardAlertPanel.name = "TabardAlert";
 InterfaceOptions_AddCategory(TabardAlertPanel);
 -------------------------------------------------------------------------------
 
---------------------------------
--- Logic for Built-in Buttons --
--------------------------------------------------------------------------------
--- When the player clicks okay, run this function.
--- panel.okay = function (self) SC_ChaChingPanel_Close(); end;
-
--- -- When the player clicks cancel, run this function.
--- panel.cancel = function (self)  SC_ChaChingPanel_CancelOrLoad();  end;
--------------------------------------------------------------------------------
-
 -----------
 -- Title --
 -------------------------------------------------------------------------------
@@ -38,25 +28,63 @@ title:SetText("TabardAlert Configuration")
 -- Checkboxes --
 -------------------------------------------------------------------------------
 -- Create the Checkbutton.
-local frame1 = CreateFrame("CheckButton", "EnabledConfigCheckbutton", TabardAlertPanel, "UICheckButtonTemplate")
-frame1:ClearAllPoints()
+local checkButton1 = CreateFrame("CheckButton", "EnabledConfigCheckbutton", TabardAlertPanel, "UICheckButtonTemplate")
+-- Clear any points that may have been set.
+checkButton1:ClearAllPoints()
 -- Set the position to be at the top left. 5 pixels to the right, 60 pixels down from the parent.
-frame1:SetPoint("TOPLEFT", 5, -60)
+checkButton1:SetPoint("TOPLEFT", 5, -60)
 -- Set the text for the checkbutton.
-_G[frame1:GetName() .. "Text"]:SetText("Enable Addon")
--- Create an event handler to handle when the checkbutton is actually checked.
-frame1:SetScript("PostClick", function(self, button, down)
-    print("it worked");
-end)
+_G[checkButton1:GetName() .. "Text"]:SetText("Enable Addon")
 
-local frame2 = CreateFrame("CheckButton", "EnableSoundConfigCheckbutton", TabardAlertPanel, "UICheckButtonTemplate")
-frame2:ClearAllPoints()
-frame2:SetPoint("TOPLEFT", 5, -140)
-_G[frame2:GetName() .. "Text"]:SetText("Enable Sound - Play an audible sound when reputation is wasted.")
+local checkButton2 = CreateFrame("CheckButton", "EnableSoundConfigCheckbutton", TabardAlertPanel, "UICheckButtonTemplate")
+checkButton2:ClearAllPoints()
+checkButton2:SetPoint("TOPLEFT", 5, -100)
+_G[checkButton2:GetName() .. "Text"]:SetText("Enable Sound - Play an audible sound when reputation is wasted.")
 
-local frame3 = CreateFrame("CheckButton", "MaxExaltedConfigCheckbutton", TabardAlertPanel, "UICheckButtonTemplate")
-frame3:ClearAllPoints()
-frame3:SetPoint("TOPLEFT", 5, -100)
-_G[frame3:GetName() .. "Text"]:SetText("Max Exalted - Do not give alerts until the exalted bar is maxed at 999/1000.")
+local checkButton3 = CreateFrame("CheckButton", "MaxExaltedConfigCheckbutton", TabardAlertPanel, "UICheckButtonTemplate")
+checkButton3:ClearAllPoints()
+checkButton3:SetPoint("TOPLEFT", 5, -140)
+_G[checkButton3:GetName() .. "Text"]:SetText("Max Exalted - Do not give alerts until the exalted bar is maxed at 999/1000.")
 -------------------------------------------------------------------------------
+
+--------------------------------
+-- Logic for Built-in Buttons --
+-------------------------------------------------------------------------------
+-- When the player clicks okay, run this function.
+TabardAlertPanel.okay = function (self) 
+
+    -- Save the state of checkButton1.
+    local checked1 = checkButton1:GetChecked()
+    if checked1 == nil then
+        TabardAlert_armed = 0;
+    elseif checked1 == 1 then
+        TabardAlert_armed = 1;
+    end
+    
+    -- Save the state of checkButton2.
+    local checked2 = checkButton2:GetChecked()
+    if checked2 == nil then
+        TabardAlert_sound = 0;
+    elseif checked2 == 1 then
+        TabardAlert_sound = 1;
+    end
+    
+    -- Save the state of checkButton3.
+    local checked3 = checkButton3:GetChecked()
+    if checked3 == nil then
+        TabardAlert_maxExalted = 0;
+    elseif checked3 == 1 then
+        TabardAlert_maxExalted = 1;
+    end
+end
+
+-- When the player clicks cancel, run this function.
+TabardAlertPanel.cancel = function (self)  
+    -- Do nothing. If the player cancelled, they did not want to save their changes.
+end
+-------------------------------------------------------------------------------
+
+
+
+
         
