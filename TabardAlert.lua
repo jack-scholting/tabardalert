@@ -12,38 +12,48 @@ WoWUnit:AddTestSuite("Test_isExalted", Test_isExalted)
  
 ----------------------
 -- Welcome the User --
-----------------------
+-------------------------------------------------------------------------------
 -- This function welcomes the user.
 function HelloWorld() 
   print("Tabard Alert: Howdy!"); 
 end 
+-------------------------------------------------------------------------------
 
 --------------------
 -- Slash Commands --
 -------------------------------------------------------------------------------
 -- This registers my slash command and takes one argument. 
 SLASH_TABARDALERT1 = '/tbal';
+SLASH_TABARDALERT2 = '/tabardalert';
+SLASH_TABARDALERT3 = '/TabardAlert';
+
+-- This variable contains the color formatting for the output.
+local color = "|cFF00FF33";
+
+-- This function handles the string argument received after the slash command.
 local function handler(msg, editbox)
 	if msg == 'on' then
-		print("|cff00FF33 Tabard Alert: Addon is now armed.");
+		print(color .. "Tabard Alert: |r Addon is now armed.");
 		TabardAlert_armed = true
 	elseif msg == 'off' then
-		print('|cFF800080Tabard Alert: Addon is now disarmed.');
+		print(color .."Tabard Alert: |r Addon is now disarmed.");
 		TabardAlert_armed = false
 	elseif msg == 'status' then
         if TabardAlert_armed == nil then
-            print("Tabard Alert: Addon is currently armed.");
+            print(color .. "Tabard Alert: |r Addon is currently armed.");
             TabardAlert_armed = true
         elseif TabardAlert_armed == true then 
-            print("Tabard Alert: Addon is currently armed.");
+            print(color .. "Tabard Alert: |r Addon is currently armed.");
         else
-            print("Tabard Alert: Addon is currently disarmed.");
+            print(color .."Tabard Alert: |r Addon is currently disarmed.");
         end
     else
-		print('Tabard Alert: Unknown Command.');
-		print('Usage: /tbal [on/off]');
+		print(color .. "Tabard Alert: |r Unknown Command.");
+		print(color .. "Usage: |r /tbal [on/off]");
 	end
 end
+
+-- This registers my handler with blizzards global list of slash commands. 
 SlashCmdList["TABARDALERT"] = handler;
 -------------------------------------------------------------------------------
 
