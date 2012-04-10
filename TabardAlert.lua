@@ -89,11 +89,21 @@ end)
 ----------------------
 -- Helper Functions --
 -------------------------------------------------------------------------------
--- @brief:
+-- @brief: Find out whether the current location is a place where the player could
+--          possibly gain reputation from kills. 
 -- @return: type bool - true: the player could gain reputation from kills in this location.
 --                      false: it is impossible to gain reputation from kills here.
+-- TODO: Possibly add a more complex/accurate logic for this.
 function inReputationPossibleLocation()
-    return true
+    local maxPlayers
+    -- Find the number of players for the area we are in.
+    _, _, _, _, maxPlayers = GetInstanceInfo()
+    -- For now, if we are in a 5-man, assume we could gain reputation here.
+    if maxPlayers ~= nil and maxPlayers == 5 then
+        return true
+    else
+    	return false
+    end
 end
 
 -- @brief: Let the player know that he is currently wasting possible reputation 
@@ -103,7 +113,7 @@ function alertPlayer()
     print(color .. "TabardAlert: |r You are wasting reputation!")
 
     -- If the player wanted sound warnings, play them.
-    if  TabardAlert_sound ~= nil and  TabardAlert_sound == 1 then
+    if  TabardAlert_sound ~= nil and  TabardAlert_sound == true then
         PlaySoundFile("Interface\\addons\\TabardAlert\\Media\\cartoon_whistle.ogg", "Master")
     else
     	-- Do nothing. They player did not want sound warnings.
