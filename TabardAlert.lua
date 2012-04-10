@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
---	Author: siriusjs
+--  Author: siriusjs
 --  Date: 4/8/12
---	Description: This is file contains the logic of the addon TabardAlert.
+--  Description: This is file contains the logic of the addon TabardAlert.
 -------------------------------------------------------------------------------
 
 --------------------
@@ -9,7 +9,7 @@
 -------------------------------------------------------------------------------
 WoWUnit:AddTestSuite("Test_isExalted", Test_isExalted)
 -------------------------------------------------------------------------------
- 
+
 ----------------------
 -- Welcome the User --
 -------------------------------------------------------------------------------
@@ -60,25 +60,26 @@ SlashCmdList["TABARDALERT"] = handler;
 ----------------------
 -- Watch for events --
 -------------------------------------------------------------------------------
--- Register for when you gain any reputation.
--- If that reputation matches the tabard, and you are exalted with that faction. Alert
--- TODO: also check if he is in a dungeon.
+-- To watch for an event, you first need to create a frame.
 local EventFrame = CreateFrame("Frame")
-EventFrame:RegisterEvent("COMBAT_TEXT_UPDATE")
-EventFrame:SetScript("OnEvent", function(self, event, event_type, faction, rep_amount)
-	if event_type == 'FACTION' then
-        if rep_amount and faction ~= nil then 
-            print('You gained ' .. rep_amount .. ' with ' .. faction)
-            local faction_id = TabardAlert_getFactionId[faction]
-            if faction_id ~= nil then 
-                local cur_tabard_faction = getTabardFaction()
-                if cur_tabard_faction ~= nil then
-                --  and isExalted(cur_tabard_faction)
-                    if cur_tabard_faction == faction_id then
-                        print('You are wasting reputation!')
-                        PlaySoundFile("Interface\\addons\\TabardAlert\\Media\\cartoon_whistle.ogg", "Master")
-                    end
-                end
+
+-- For the newly created frame, register the event we are interested in.
+EventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+
+-- Create a function to handle when this event happens.
+EventFrame:SetScript("OnEvent", function(_, _, _, event)
+    -- If the addon is armed, and an enemy is killed.
+    if TabardAlert_armed == true and event == 'UNIT_DIED' then
+        -- Check that we are in a place where reputation gain from tabards is possible.
+    	if inReputationPossibleLocation() then
+    	    -- Get the faction id for the current tabard.
+    	    local tabardFac = getTabardFaction() 
+    	    -- Check if we are exalted with our tabard faction.
+    	    if tabardFac ~= nil and isExalted( tabardFac ) then
+    	        -- Reputation was wasted! Tell the player.
+    	        alertPlayer()
+            else 
+                print('kill but not exalted')
             end
         end
     end
@@ -88,12 +89,37 @@ end)
 ----------------------
 -- Helper Functions --
 -------------------------------------------------------------------------------
--- Check for and return the id for the current tabard faction.
+-- @brief:
+-- @return: type bool - true: the player could gain reputation from kills in this location.
+--                      false: it is impossible to gain reputation from kills here.
+function inReputationPossibleLocation()
+    return true
+end
+
+-- @brief: Let the player know that he is currently wasting possible reputation 
+--          on each kill.
+function alertPlayer()
+    -- Print a text alert in the chat log.
+    print(color .. "TabardAlert: |r You are wasting reputation!")
+
+    -- If the player wanted sound warnings, play them.
+    if  TabardAlert_sound ~= nil and  TabardAlert_sound == 1 then
+        PlaySoundFile("Interface\\addons\\TabardAlert\\Media\\cartoon_whistle.ogg", "Master")
+    else
+    	-- Do nothing. They player did not want sound warnings.
+    end
+end
+
+-- @brief: This function is used to find the faction that the player is currently
+--      representing with his tabard.
+-- @return: factionId - The ID of the faction that the player's tabard represents.
 function getTabardFaction()
     -- Find the id for the tabard the player is currently wearing.
-	local itemId = GetInventoryItemID("player", GetInventorySlotInfo("TabardSlot"));
+    local itemId = GetInventoryItemID("player", GetInventorySlotInfo("TabardSlot"));
     if itemId ~= nil then 
+        -- Convert the tabard id to a string to look it up in the hash table.
         local itemId_str = string.format("%d", itemId)
+        -- This table is defined in TabardAlertLists.lua.
         local factionId = TabardAlert_TabardToFaction[itemId_str]
         if factionId ~= nil then
             return factionId
@@ -101,14 +127,26 @@ function getTabardFaction()
     end
 end
 
--- This simply returns true if the player is exalted with the given faction.
--- TODO: consider a user that wants to max the exalted bars to 999/1000.
+-- @brief: This simply returns true if the player is exalted with the given faction.
+-- @param: factionId - the unique id for a given faction.
+-- @return: type bool - true: the player is deemed exalted. false: the player is deemed not yet exalted.
 function isExalted( factionId )
-	_, _, standingId = GetFactionInfoByID( factionId );
-	if standingId == 8 then
-		return true;
+    -- Grab faction information about the player.
+    _, _, standingId, _, _, currentRep = GetFactionInfoByID( factionId );
+    -- This variable is an option set by the user.
+    if TabardAlert_maxExalted == nil or TabardAlert_maxExalted == false then  
+        if standingId == 8 then
+            return true
 	else 
-		return false;
+    	    return false
 	end
+    -- If we are here, then the player wants to max out the rep bar.
+    else 
+    	if currentRep ~= nil and currentRep == 42999 then 
+    	    return true
+    	else
+    	    return false
+        end
+    end
 end
 -------------------------------------------------------------------------------
