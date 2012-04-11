@@ -9,4 +9,5 @@
 TabardAlert.lua
 TabardAlertLists.lua
 TabardAlertConfig.lua
+TabardAlertUnitTests.lua
 TabardAlert.xml

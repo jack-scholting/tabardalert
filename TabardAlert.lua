@@ -8,14 +8,15 @@
 -- Add Unit Tests --
 -------------------------------------------------------------------------------
 WoWUnit:AddTestSuite("Test_isExalted", Test_isExalted)
+--WoWUnit:AddTestSuite("Test_inReputationPossibleLocation_callFail", Test_inReputationPossibleLocation_callFail)
 -------------------------------------------------------------------------------
 
 ----------------------
 -- Welcome the User --
 -------------------------------------------------------------------------------
 -- This function welcomes the user.
-function HelloWorld() 
-  print("Tabard Alert: Howdy!"); 
+function WelcomePlayer() 
+  print("|cFF00FF33 Tabard Alert: |r Howdy!"); 
 end 
 -------------------------------------------------------------------------------
 
@@ -32,25 +33,16 @@ local color = "|cFF00FF33";
 
 -- This function handles the string argument received after the slash command.
 local function handler(msg, editbox)
-	if msg == 'on' then
-		print(color .. "Tabard Alert: |r Addon is now armed.");
-		TabardAlert_armed = true
-	elseif msg == 'off' then
-		print(color .."Tabard Alert: |r Addon is now disarmed.");
-		TabardAlert_armed = false
-	elseif msg == 'status' then
-        if TabardAlert_armed == nil then
-            print(color .. "Tabard Alert: |r Addon is currently armed.");
-            TabardAlert_armed = true
-        elseif TabardAlert_armed == true then 
-            print(color .. "Tabard Alert: |r Addon is currently armed.");
-        else
-            print(color .."Tabard Alert: |r Addon is currently disarmed.");
-        end
+    if msg == 'on' then
+	print(color .. "Tabard Alert: |r Addon is now armed.");
+	TabardAlert_armed = true
+    elseif msg == 'off' then
+	print(color .."Tabard Alert: |r Addon is now disarmed.");
+	TabardAlert_armed = false
     else
-		print(color .. "Tabard Alert: |r Unknown Command.");
-		print(color .. "Usage: |r /tbal [on/off]");
-	end
+	print(color .. "Tabard Alert: |r Unknown Command.");
+	print(color .. "Usage: |r /tbal [on/off]");
+    end
 end
 
 -- This registers my handler with blizzards global list of slash commands. 
@@ -145,7 +137,7 @@ function isExalted( factionId )
     _, _, standingId, _, _, currentRep = GetFactionInfoByID( factionId );
     -- This variable is an option set by the user.
     if TabardAlert_maxExalted == nil or TabardAlert_maxExalted == false then  
-        if standingId == 8 then
+        if standingId ~= nil and standingId == 8 then
             return true
 	else 
     	    return false
@@ -159,4 +151,4 @@ function isExalted( factionId )
         end
     end
 end
--------------------------------------------------------------------------------
+-----------------------------------------------------------------------------

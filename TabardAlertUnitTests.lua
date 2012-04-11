@@ -1,40 +1,37 @@
 -------------------------------------------------------------------------------
---	Author: siriusjs
+--  Author: siriusjs
 --  Date: 4/8/12
---	Description: This file contains the unit tests for the TabardAlert addon. 
+--  Description: This file contains the unit tests for the TabardAlert addon. 
 --      * These tests are run by the addon WoWUnit.
 --      * To run: "/wowunit <test_suite_name>" (use while in-game)
 -------------------------------------------------------------------------------
 
-local Test_isExalted = {
-	
-	mocks = {
-		UnitName = function()
-			return "Soandso";
-		end;
-        GetFactionInfoByID = function()
-            return 8
-        end;
-	};
-	
-	setUp = function()
-		return {};
-	end;
+local Test_ApiCallFail = {
 
-	tearDown = function()
- 		-- no tear down required
-	end;
-	
-	testExample = function()
-		assert(UnitName("player") == "Soandso", "Expected player name to be 'Soandso'");
-	end;
-	
-	testFailure = function()
-		assert(UnitName("player") == "Feithar", "Expected player name to be 'Feithar'");
-	end;
+    mocks = {
+    	GetInstanceInfo = function()
+    	    return nil
+    	end;
+    	GetInventoryItemID = function()
+    	    return nil
+    	end;
+        GetFactionInfoByID = function()
+            return nil
+        end;
+    };
+        
+    test_inReputationPossibleLocation = function()
+	    assert(inReputationPossibleLocation() == false, "Expected location to be false.");
+    end;
     
-    testPlayerIsExalted = function()
-        assert(isExalted( factionId ) == false, "Expected player to be exalted");
+    test_getTabardFaction = function()
+	    assert(getTabardFaction() == nil, "Expected tabard faction to be nil"); 
+    end;
+    
+    test_isExalted = function()
+        assert(isExalted( 72 ) == false, "Expected player to not be exalted for an unknown faction");
     end;
 	
 }
+WoWUnit:AddTestSuite("Test_ApiCallFail", Test_ApiCallFail)
+

@@ -6,8 +6,7 @@
     <Frame name="TabardAlertFrame">
         <Scripts>
             <OnLoad>
-                HelloWorld();
-                getTabardFaction();
+                WelcomePlayer();
             </OnLoad>
         </Scripts>
     </Frame>
