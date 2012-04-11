@@ -4,13 +4,6 @@
 --  Description: This is file contains the logic of the addon TabardAlert.
 -------------------------------------------------------------------------------
 
---------------------
--- Add Unit Tests --
--------------------------------------------------------------------------------
-WoWUnit:AddTestSuite("Test_isExalted", Test_isExalted)
---WoWUnit:AddTestSuite("Test_inReputationPossibleLocation_callFail", Test_inReputationPossibleLocation_callFail)
--------------------------------------------------------------------------------
-
 ----------------------
 -- Welcome the User --
 -------------------------------------------------------------------------------
@@ -70,8 +63,6 @@ EventFrame:SetScript("OnEvent", function(_, _, _, event)
     	    if tabardFac ~= nil and isExalted( tabardFac ) then
     	        -- Reputation was wasted! Tell the player.
     	        alertPlayer()
-            else 
-                print('kill but not exalted')
             end
         end
     end
