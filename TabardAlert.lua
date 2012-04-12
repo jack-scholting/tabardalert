@@ -9,7 +9,18 @@
 -------------------------------------------------------------------------------
 -- This function welcomes the user.
 function WelcomePlayer() 
-  print("|cFF00FF33 Tabard Alert: |r Howdy!"); 
+    print("|cFF00FF33 Tabard Alert: |r Howdy!"); 
+
+    -- If this is the first time seeing this character, initialize the settings.
+    if TabardAlert_armed == nil then
+        TabardAlert_armed = true
+    end
+    if TabardAlert_sound == nil then
+    	TabardAlert_sound = true
+    end
+    if TabardAlert_maxExalted == nil then
+    	TabardAlert_maxExalted = true
+    end
 end 
 -------------------------------------------------------------------------------
 
