@@ -1,13 +1,13 @@
 # TabardAlert #
 
 This is the text alert shown when you waste reputation. A audible sound also plays at this time.
-![alert](/../resources/alert.PNG?raw=true)
+![Alert](/../resources/alert_msg.png?raw=true)
 
 These are the responses you receive if you arm/disarm the addon using the slash command "/tbal [on/off]".
-![ArmAndDisarm](/../resources/armanddisarm.PNG?raw=true)
+![ArmAndDisarm](/../resources/arm_and_disarm.png?raw=true)
 
 This menu is found at Interface->Addons->TabardAlert.
-![Configuration](/../resources/configuration.PNG?raw=true)
+![Configuration](/../resources/config_menu.png?raw=true)
 
 ## Overview ##
 
